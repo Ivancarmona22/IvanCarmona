@@ -1,0 +1,54 @@
+CREACION DE TABLA
+---------------------------------
+CREATE TABLE libros(
+id_libro NUMBER(5) PRIMARY KEY,
+titulo varchar2(60) NOT NULL,
+autor varchar2(60),
+fecha_publicacion DATE,
+disponible number(1)
+);
+--------------------------------------------------------------------------
+INSERTAR DATOS EN FILAS
+
+INSERT INTO libros (id_libro, titulo, autor, fecha_publicacion, disponible)
+VALUES (1, 'Cien Años', 'Juan Perez', TO_DATE('2001-05-30', 'YYYY-MM-DD'), 0);
+
+INSERT INTO libros (id_libro, titulo, autor, fecha_publicacion, disponible)
+VALUES (2, 'La revolucion', 'Jorge Martinez', TO_DATE('2000-06-08', 'YYYY-MM-DD'), 0);
+
+INSERT INTO libros (id_libro, titulo, autor, fecha_publicacion, disponible)
+VALUES (3, 'independencia', 'Miguel Sanchez', TO_DATE('2010-01-01', 'YYYY-MM-DD'), 1);
+
+INSERT INTO libros (id_libro, titulo, autor, fecha_publicacion, disponible)
+VALUES (4, 'El universo', 'Ivan Lopez', TO_DATE('1998-10-19', 'YYYY-MM-DD'), 1);
+
+INSERT INTO libros (id_libro, titulo, autor, fecha_publicacion, disponible)
+VALUES (5, 'El Principito', 'Edgar Carmona', TO_DATE('2006-04-06', 'YYYY-MM-DD'), 1);
+-------------------------------------------------------------------------------
+CONSULTA GENERAL DE TABLA LIBROS
+
+SELECT * FROM libros;
+--------------------------------------
+MOSTRAR SOLO LOS DISPONIBLES (VALOR=1)
+
+SELECT * FROM libros
+WHERE disponible = 1;
+------------------------------------------
+MOSTRAR POR TITULO Y AUTOR Y ORDENADOS ALFABETICAMENTE
+
+SELECT titulo, autor FROM libros
+ORDER BY titulo ASC, autor ASC;
+-------------------------------------------
+ACTUALIZAR CAMPO DE FILA POR MEDIO DE ID
+
+UPDATE libros
+SET disponible = 0
+WHERE id_libro = 5;
+---------------------------------------------
+BORRAR FILA DE TABLA POR ID
+
+DELETE FROM libros
+WHERE id_libro = 5;
+
+
+
