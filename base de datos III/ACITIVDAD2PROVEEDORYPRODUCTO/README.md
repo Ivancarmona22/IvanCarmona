@@ -1,2 +1,115 @@
-# IvanCarmona
+# Actividad 1 Base de datos Oracle con Dbeaver
+### CREA UN USUARIO
+
+- CREATE USER C##ACTIVIDAD1 IDENTIFIED BY 1;
+
+### CREA PERMISOS PARA CREAR TABLAS Y OTRAS COSAS
+
+- GRANT CONNECT, RESOURCE TO C##ACTIVIDAD1;
+
+### DA PERMISOS PARA USAR EL ESPACIO DE USERS
+
+- ALTER USER C##ACTIVIDAD1 DEFAULT TABLESPACE USERS;
+- ALTER USER C##ACTIVIDAD1 QUOTA UNLIMITED ON USERS;
+
+### CREAR TABLA DE NOMBRE PRODUCTO--
+- SE ELIGIO EL NOMBRE DE PRODUCTO POR QUE RE´RESENTA LOS ARTICULOS QUE SE ENCUENTRAN DENTRO DE LA TABLA
+CON ID_PRODUCTO, NOMBRE, PRECIO UNITARIO, FECHA DE VENCIMIENTO Y STATUS
+
+- ID_PRODUCTO: SE ELIGIO NUMBER POR QUE SE NECESITTA UN IDENTIFICADOR PARA CADA PRODUCTO.
+  
+- NOMBRE_PRODUCTO: SE ELIGIO VARCHAR(100) CON NOT NULL, NO PUEDE ESTAR VACIO ESE ESPACIO Y ES EL NOMBRE DEL ARTICULO
+
+- PRECIO_UNITARIO: SE ELIGIO DE TIPO NUMBER(10) SERA EL PRECIO DE CADA PRODUCTO, SE PUSO 10 ESPACIOS POR ALTICULOS MAS CAROS
+
+- FECHA_VENCIMIENTO: SE ELIGIO DATE, PARA LA FECHA DE VENCIMIENTO, INICIANDO CON AÑO, MES Y DIA
+
+- STATUS: SE ELIGIO VARCHAR2(100), POR QUE ES EL STATUS EN EL QUE SE ENCUENTRA EL PRODUCTO,  SI ESTA DISPONIBLE  O NO DISPONIBLE
+ 
+- CREATE TABLE C##ACTIVIDAD1.productos (
+id_producto number(5) PRIMARY KEY,
+nombre_producto varchar2(100) NOT NULL,
+precio_unitario NUMBER (10),
+fecha_vencimiento DATE,
+status varchar2(100) NOT NULL
+);
+### COMENTARIOS NIVEL TABLA
+### PRODUCTOS
+- COMMENT ON TABLE C##ACTIVIDAD1.productos IS 'Tabla que almacena la informacion de los productos.';
+
+### COMENTARIOS NIVEL ATRIBUTO
+### PRODUCTO
+- COMMENT ON COLUMN C##ACTIVIDAD1.productos.id_producto IS 'Identificador unico de cada producto';
+- COMMENT ON COLUMN C##ACTIVIDAD1.productos.nombre_producto IS 'Nombre de cada producto';
+- COMMENT ON COLUMN C##ACTIVIDAD1.productos.precio_unitario IS 'Precio unico para cada producto';
+- COMMENT ON COLUMN C##ACTIVIDAD1.productos.fecha_vencimiento IS 'Fecha de Vencimiento del producto';
+- COMMENT ON COLUMN C##ACTIVIDAD1.productos.status IS 'Estatus en el que se encuentra el producto (Disponible o no disponible)';
+
+### SELECT DE LA TABLA PRODUCTOS
+- SELECT * FROM C##ACTIVIDAD1.productos;
+
+### SELECT DE COMENTARIOS EN LA TABLA PRODUCTOS
+- SELECT * FROM USER_TAB_COMMENTS
+- WHERE TABLE_NAME = 'PRODUCTOS';
+
+### SELECT DE COMENTARIOS DE LAS COLUMNAS DE LA TABLA PRODUCTOS
+- SELECT * FROM USER_COL_COMMENTS
+- WHERE TABLE_NAME = 'PRODUCTOS';
+
+### INSERTS
+### TABLA PRODUCTOS
+
+- INSERT INTO C##ACTIVIDAD1.productos (id_producto, nombre_producto, precio_unitario, fecha_vencimiento, status)
+VALUES (1, 'Sabritas', 20, TO_DATE ('2025-07-1','YYYY-MM-DD'),'activo');
+
+- INSERT INTO C##ACTIVIDAD1.productos (id_producto, nombre_producto, precio_unitario, fecha_vencimiento, status)
+VALUES (2, 'Agua simple Ciel', 18, TO_DATE ('2026-03-25','YYYY-MM-DD'),'activo');
+
+- INSERT INTO C##ACTIVIDAD1.productos (id_producto, nombre_producto, precio_unitario, fecha_vencimiento, status)
+VALUES (3, 'Galletas Emperador', 17, TO_DATE ('2026-02-8','YYYY-MM-DD'),'inactivo');
+
+- INSERT INTO C##ACTIVIDAD1.productos (id_producto, nombre_producto, precio_unitario, fecha_vencimiento, status)
+VALUES (4, 'Gomitas Enchiladas', 10, TO_DATE ('2025-07-15','YYYY-MM-DD'),'activo');
+
+- INSERT INTO C##ACTIVIDAD1.productos (id_producto, nombre_producto, precio_unitario, fecha_vencimiento, status)
+VALUES (5, 'Refresco Coca cola 1L', 30, TO_DATE ('2027-01-15','YYYY-MM-DD'),'inactivo');
+
+### CONSULTAR (SELECT)
+### PRODUCTOS
+- SELECT * FROM C##ACTIVIDAD1.productos;
+
+### CONDICION WHERE
+## BUSCAR EN COLUMNA NOMBRE_PRODUCTO EL PDOCUTO AGUA SIMPLE CIEL
+- SELECT * FROM C##ACTIVIDAD1.PRODUCTOS WHERE NOMBRE_PRODUCTO LIKE '%Agua simple Ciel%';
+
+### CONDICION WHERE
+
+## BUSCA EN LA COLUMNA PRECIO_UNITARIO EL VALOR QUE SEA MAYOR A 11
+- SELECT * FROM C##ACTIVIDAD1.PRODUCTOS WHERE PRECIO_UNITARIO > 11;
+
+### CONDICION WHERE ADD, OR
+## BUSCAR EN LA COLUMNA STATUS EL VALOR ACTIVO Y EN LA COLUMNA PRECIO_UNITARIO VALOR QUE SEA MAYOR A 11, SOLO ARROGARA LAS FILAS QUE CUMPLAN LAS DOS CONDICIONES
+- SELECT * FROM C##ACTIVIDAD1.PRODUCTOS WHERE STATUS = 'activo'AND PRECIO_UNITARIO >= 11;
+
+- SELECT * FROM C##ACTIVIDAD1.PRODUCTOS WHERE STATUS = 'activo'OR PRECIO_UNITARIO >= 20;
+
+### CREACION DE TABLA CON NOMBRE PROVEEDORES
+- TABLA DE PROVVEDORES SE ELEGIO NOMBRE DE PROVEEDORES POR QUE SON LAS EMPRESAS O LAS PERSONAS FISICAS ENCARGADAS DE ABASTECERE LOS PRODUCTOS
+  
+- ID_PROVEEDORES: SE ELIGIO NUMBER POR QUE SE NECESITTA UN IDENTIFICADOR PARA CADA PRODUCTO.
+
+- NOMBRE_PROVEEDOR: SE ELIGIO VARCHAR(200) CON NOT NULL, NO PUEDE ESTAR VACIO ESE ESPACIO Y ES EL NOMBRE DE LA EMPRESA O PROVEEDOR ACTIVO
+
+- CONTACTO_PROVEEDOR: SE ELIGIO VARCHAR2(100) CON NOT NUL, SERA EL CONTACTO DE CORREO ELECTRONICO DEL PROVEEDOR O EMPRESA
+ 
+- CREATE TABLE C##ACTIVIDAD1.proveedoress (
+id_proveedor number PRIMARY KEY,
+nombre_proveedor varchar2(100) NOT NULL,
+contacto_proveedor varchar2(100) NOT NULL
+);
+- DESCRIPCION: La relacion que tendria entre la tabla productos y proveedores seria de que cada producto tiene a su proveedor
+ en este caso se debe agregar una columna llamada id_proveedor en la tabla de productos y declararla con clave foranea
+
+- COMMENT ON TABLE C##ACTIVIDAD1.proveedores IS 'La relacion que tendria entre la tabla productos y proveedores seria de que cada producto tiene a su proveedor
+ en este caso se debe agregar una columna llamada id_proveedor en la tabla de productos y declararla con clave foranea.';
 
